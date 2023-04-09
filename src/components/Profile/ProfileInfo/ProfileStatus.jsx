@@ -1,32 +1,64 @@
 import React from "react";
 
-import css from './ProfileInfo.module.css';
-import Profile from "../Profile";
-import Preloader from "../../common/Preloder/Preloader";
 
+class ProfileStatus extends React.Component {
 
-
-const ProfileInfo = (props) => {
-
-    if (!props.profile) {
-        return <Preloader />
+    state = {
+        editMode: false,
+        status: this.props.status
     }
-    return (
-        <div>
-          {/*  <div>
-                <img className={css.content_img}
-                    src='https://phonoteka.org/uploads/posts/2021-04/1618631414_42-phonoteka_org-p-povtoryayushchiisya-fon-55.png'/>
-            </div>*/}
-            <div className={css.descriptionBlock}>
 
-               <img src={props.profile.photos.large}/>
-                <ProfileStatus />
+    activateEditMode = () => {
+        this.setState({
+            // ...this.state,
+            editMode: true
+        })
+    }
 
-                ava + dis
+    deactivateEditMode = () => {
+        this.setState({
+            // ...this.state,
+            editMode: false
+        });
+        this.props.updateUserStatus(this.state.status)
+    }
+
+    onStatusChange = (e) => {
+        this.setState({
+            status:  e.currentTarget.value
+        });
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // console.log('componentDidUpdate');
+       if (prevProps.status !== this.props.status) {
+           this.setState({
+               state: this.props.status
+           })
+           }
+    }
+
+    render() {
+        // console.log('render');
+
+        return (
+            <div>
+                {!this.state.editMode &&
+                    <div>
+                        <span onDoubleClick={this.activateEditMode}>{this.props.status || 'No status'}</span>
+                    </div>
+                }
+                {this.state.editMode &&
+                    <div>
+                        <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactivateEditMode}
+                               value={this.state.status}/>
+                    </div>
+                }
             </div>
-        </div>
-    )
 
+        )
+    }
 }
 
-export default ProfileInfo;
+export default ProfileStatus;

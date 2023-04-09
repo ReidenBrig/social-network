@@ -1,8 +1,5 @@
-.userPhoto {
-    width: 100px;
-    border-radius: 50%;
-}
-
-.selectedPage {
-    font-weight: bold;
+.preloader {
+    position: absolute;
+    top: 25%;
+    left: 25%;
 }

@@ -1,7 +1,12 @@
-.content_img {
-    height: 150px
+.userPhoto {
+    width: 100px;
+    border-radius: 50%;
 }
 
-.item {
-    color: green;
+.selectedPage {
+    font-weight: bold;
+}
+
+.users {
+    position: relative;
 }

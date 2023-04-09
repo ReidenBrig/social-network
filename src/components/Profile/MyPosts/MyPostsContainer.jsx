@@ -1,62 +1,65 @@
 import React from "react";
-
-import css from './MyPosts.module.css'
-import Post from "./Post/Post";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
-
-
-
+import {addPostActionCreator} from "../../../redux/profile-reducer";
+import MyPosts from "./MyPosts";
+// import StoreContext from "../../../StoreContext";
+// import {sendMessageCreator, updateNewMessageBodyCreator} from "../../../redux/dialogs-reducer";
+import {connect} from "react-redux";
 
 
-const MyPosts = (props) => {
+/*const MyPostsContainer = (props) => {
+    // let state = props.store.getState();
 
-    let newPostElement = React.createRef();
-
-    const handleAddPost = () => {
-        // props.addPost();
-        props.dispatch( addPostActionCreator() );
-    }
-
-    const onPostChange = () => {
-        let text = newPostElement.current.value;
-        // props.updateNewPostText(text);
-        props.dispatch( updateNewPostTextActionCreator(text) );
-
-    }
+    //перенос в разметку
+    // const addPost = () => {
+    //     props.store.dispatch(addPostActionCreator());
+    // }
+    //
+    // const onPostChange = (text) => {
+    //     let action = (updateNewPostTextActionCreator(text));
+    //     props.store.dispatch(action);
+    // }
 
     return (
-        <div className={css.postsBlock}>
-            <div>
-                <h3>My posts</h3>
-            </div>
-            <div>
-                <div>
-                    <textarea
-                        onChange={ onPostChange }
-                        ref={newPostElement}
-                        value={props.newPostText}
+        <StoreContext.Consumer>
+            {
+                (store) => {
+                    let state = store.getState();
+
+                    const addPost = () => {
+                        store.dispatch(addPostActionCreator());
+                    }
+
+                    const onPostChange = (text) => {
+                        let action = (updateNewPostTextActionCreator(text));
+                        store.dispatch(action);
+                    }
+
+                    return <MyPosts
+                        updateNewPostText={onPostChange}
+                        addPost={addPost}
+                        postsData={state.profilePage.postsData}
+                        newPostText={state.profilePage.newPostText}
                     />
-                </div>
-                <div>
-                    <button onClick={handleAddPost}
-                            type="button">
-                        Add post
-                    </button>
-                </div>
-            </div>
-            <div className={css.posts}>
-                {
-                    props.postsData.map((post) => (
-                        <Post message={post.message} id={post.id} likesCount={post.likesCount}/>
-                    ))
                 }
-            </div>
-
-        </div>
-
-
+            }
+        </StoreContext.Consumer>
     )
+}*/
 
+const mapStateToProps = (state) => {
+    return {
+        postsData: state.profilePage.postsData,
+        newPostText: state.profilePage.newPostText,
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addPost: (newPostText) => {
+            dispatch(addPostActionCreator(newPostText));
+        }
+    }
 }
 
-export default MyPosts;
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+
+export default MyPostsContainer;

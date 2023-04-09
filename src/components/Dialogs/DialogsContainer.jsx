@@ -1,11 +1,14 @@
 import React from "react";
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialogs-reducer";
+import {sendMessageCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
-import StoreContext from "../../StoreContext";
+// import StoreContext from "../../StoreContext";
+import {connect} from "react-redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
-const DialogsContainer = (props) => {
+/*const DialogsContainer = (/!*props*!/) => {
 //переносим все в разметку для получения контекста
-    let state = props.store.getState().dialogsPage;
+    /!*let state = props.store.getState().dialogsPage;
 
     const onSendMessageClick = () => {
         props.store.dispatch(sendMessageCreator())
@@ -14,7 +17,7 @@ const DialogsContainer = (props) => {
     const onNewMessageChange = (body) => {
         props.store.dispatch(updateNewMessageBodyCreator(body))
     }
-
+*!/
 
     return (
         <StoreContext.Consumer>
@@ -34,7 +37,7 @@ const DialogsContainer = (props) => {
                     return <Dialogs
                         updateNewMessageBody={onNewMessageChange}
                         sendMessage={onSendMessageClick}
-                        dialogsPage={state}
+                        dialogsPage={store.getState().dialogsPage}
                     />
                 }
 
@@ -42,5 +45,26 @@ const DialogsContainer = (props) => {
         </StoreContext.Consumer>
 
     )
+}*/
+
+const mapStateToProps = (state) => {
+    return {
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
+    }
 }
-export default DialogsContainer;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        sendMessage: (newMessageBody) => {
+            dispatch(sendMessageCreator(newMessageBody))
+
+
+        }
+    }
+}
+
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(Dialogs);

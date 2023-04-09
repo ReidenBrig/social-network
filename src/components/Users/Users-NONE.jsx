@@ -6,7 +6,7 @@ import axios from "axios";
 import userPhoto from './../../assets/images/logoUsers.png'
 
 
-const Users = (props) => {
+const UsersNONE = (props) => {
     let getUsers = () => {
         if (props.users.length === 0) {
 
@@ -64,4 +64,4 @@ const Users = (props) => {
 
 }
 
-export default Users;
+export default UsersNONE;

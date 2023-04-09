@@ -1,5 +1,12 @@
-.preloader {
-    position: absolute;
-    top: 25%;
-    left: 25%;
+.formControl {
+    border-radius: 30px;
+}
+
+.formControl.error input,
+.formControl.error textarea {
+    border: 2px red solid;
+}
+
+.formControl.error span {
+    color: red;
 }
