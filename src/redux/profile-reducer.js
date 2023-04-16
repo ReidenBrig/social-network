@@ -8,9 +8,9 @@ const SET_USER_STATUS = 'SET-USER-STATUS';
 let initialState = {
     postsData: [
         {id: 1, message: "It's my first post", likesCount: 0},
-        {id: 2, message: "Hello, how are you?", likesCount: 2},
-        {id: 3, message: "Post 3", likesCount: 3},
-        {id: 4, message: "Post 4", likesCount: 4}
+        // {id: 2, message: "Hello, how are you?", likesCount: 2},
+        // {id: 3, message: "Post 3", likesCount: 3},
+        // {id: 4, message: "Post 4", likesCount: 4}
     ],
     newPostText: 'First post',
     profile: null,

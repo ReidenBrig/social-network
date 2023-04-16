@@ -25,7 +25,7 @@ const Navbar = () => {
                     className={setActive}
                     to="/users">Users</NavLink>
             </div>
-            <div className={css.item}>
+          {/*  <div className={css.item}>
                 <NavLink
                     className={setActive}
                     to="/news">News</NavLink>
@@ -39,7 +39,7 @@ const Navbar = () => {
                 <NavLink
                     className={setActive}
                     to="/settings">Settings</NavLink>
-            </div>
+            </div>*/}
         </nav>
     )
 

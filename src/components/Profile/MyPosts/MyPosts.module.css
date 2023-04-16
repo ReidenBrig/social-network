@@ -1,7 +1,39 @@
+*{
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
 .postsBlock {
     padding: 10px;
 }
 
 .posts {
     margin-top: 10px;
+}
+
+.postForm {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.textArea textarea {
+    display: flex;
+    width: 300px;
+    height: 100px;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+.textArea textarea::placeholder{
+    padding: 5px;
+}
+
+.postForm button {
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+
 }

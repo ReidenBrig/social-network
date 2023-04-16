@@ -8,7 +8,11 @@ import {NavLink} from "react-router-dom";
 const Header = (props) => {
     return (
         <header className={css.header}>
-            <img src={logo}/>
+            <div className={css.headerLogoText}>
+                <img className={css.headerLogoTextImg} src={logo}/>
+                <h1 className={css.logoText}>MiniNetwork</h1>
+            </div>
+
 
             <div className={css.loginBlock}>
                 {

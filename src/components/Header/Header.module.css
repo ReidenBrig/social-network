@@ -1,19 +1,35 @@
+
 .header {
+    width: 100%;
     grid-area: header;
     background-color: beige;
     display: flex;
     justify-content: space-between;
+
+    gap: 10px;
+    align-items: center;
+
+}
+.headerLogoText {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
     align-items: center;
 }
 
-.header img {
-    height: 100%;
+.logoText {
+    font-size: 24px;
+
+}
+
+.headerLogoTextImg {
+    width: 55px;
     margin-left: 20px;
 }
 
 .loginBlock {
     float: right;
-    /*margin: 20px;*/
+    margin: 20px;
 
 }
 
