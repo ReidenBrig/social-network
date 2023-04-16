@@ -14,7 +14,7 @@ let initialState = {
     ],
     newPostText: 'First post',
     profile: null,
-    staus: ''
+    status: ''
 }
 
 const profileReducer = (state = initialState, action) => {

@@ -1,29 +1,11 @@
 import React from "react";
-import axios from "axios";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfile, getUserStatus, setUserProfile, updateUserStatus} from "../../redux/profile-reducer";
-
-import {
-    Navigate,
-    useLocation,
-    useNavigate,
-    useParams,
-} from "react-router-dom";
-import {usersAPI} from "../../api/api";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {getUserProfile, getUserStatus, updateUserStatus} from "../../redux/profile-reducer";
+import {useLocation, useNavigate, useParams,} from "react-router-dom";
 import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
-
-// import { useParams } from 'react-router-dom';
-
-/*export function withRouter(Children){
-    return(props)=>{
-
-        const match  = {params: useParams()};
-        return <Children {...props}  match = {match}/>
-    }
-}*/
 
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
@@ -33,7 +15,7 @@ function withRouter(Component) {
         return (
             <Component
                 {...props}
-                router={{ location, navigate, params }}
+                router={{location, navigate, params}}
             />
         );
     }
@@ -46,30 +28,17 @@ class ProfileContainer extends React.Component {
     componentDidMount() {
         let userId = this.props.router.params.userId;
         if (!userId) {
-            userId = 2;
+            userId = this.props.authorizedUserId;
+            // if (!userId) {
+            //     debugger
+            //     this.props.history.push("/login")
+            // }
         }
-
-
         this.props.getUserProfile(userId);
-
-        // setTimeout(() => {
-            this.props.getUserStatus(userId);
-
-        // },2000)
-
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-           //
-           // usersAPI.getProfile(userId)
-           //  .then(response => {
-           //      this.props.setUserProfile(response.data)
-           //  });
+        this.props.getUserStatus(userId);
     }
 
-
-
-
     render() {
-
 
         return (
             <div>
@@ -82,20 +51,22 @@ class ProfileContainer extends React.Component {
             </div>
         )
     }
-
 }
 
 let mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorizedUserId: state.auth.userId,
+    isAuth: state.auth.isAuth
+
 })
 
 export default compose(
+    withAuthRedirect,
     connect(mapStateToProps, {
         getUserProfile,
         getUserStatus,
         updateUserStatus
     }),
-        withRouter,
-        // withAuthRedirect
-    )(ProfileContainer);
+    withRouter,
+)(ProfileContainer);

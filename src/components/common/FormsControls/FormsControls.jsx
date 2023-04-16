@@ -6,15 +6,15 @@ import css from './FormControls.module.css'
 export const FormsControl = ({ input, meta, child, ...props }) => {
     const hasError = meta.touched && meta.error;
     return (
-        <div className={ css.formControl + " " + (hasError ? css.error : "") }>
-            <div>
+        <span className={ css.formControl + " " + (hasError ? css.error : "") }>
+            <span>
                 {props.children}
-            </div>
-            <div>
+            </span>
+            <span>
                 { hasError && <span> { meta.error } </span> }
 
-            </div>
-        </div>
+            </span>
+        </span>
     );
 };
 

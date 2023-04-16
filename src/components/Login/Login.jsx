@@ -5,7 +5,8 @@ import {maxLengthCreator, required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Navigate} from "react-router-dom";
-import {mapStateToPropsFactory} from "react-redux/es/connect/mapStateToProps";
+
+import css from './../common/FormsControls/FormControls.module.css'
 
 
 const maxLength10 = maxLengthCreator(20);
@@ -37,12 +38,18 @@ const LoginForm = (props) => {
                 </div>
                 <div>
                     <Field
+
                         name={'rememberMe'}
                         type={"checkbox"}
                         component={Input}
                         validate={[required, maxLength10]}
                     /> Remember me
                 </div>
+
+                { props.error && <div className={css.formSummaryError}>
+                    {props.error}
+                </div>}
+
                 <div>
                     <button>Login</button>
                 </div>
