@@ -3,10 +3,28 @@
     border-radius: 50%;
 }
 
-.selectedPage {
-    font-weight: bold;
-}
-
 .users {
     position: relative;
+}
+
+.userBlock {
+    display: flex;
+    gap: 20px;
+    justify-content: start;
+    align-items: center;
+    font-family: 'Magneto', sans-serif;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.followBtn button {
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px 15px;
+    background-color: rgba(123,252,142,0);
 }

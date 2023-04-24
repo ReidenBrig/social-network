@@ -1,19 +1,17 @@
-import {authAPI, usersAPI} from "../api/api";
-import {toggleFollowingProgress, unfollowSuccess} from "./users-reducer";
+import {authAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
-const SET_USER_DATA = 'SET_USER_DATA';
-const UNFOLLOW = 'UNFOLLOW';
+const SET_USER_DATA = 'social-network/auth/SET_USER_DATA';
+const GET_CAPTCHA_URL_SUCCESS = 'social-network/auth/GET_CAPTCHA_URL_SUCCESS';
 
-
-const photoUrl = 'https://static.vecteezy.com/system/resources/previews/005/005/788/original/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg';
 
 let initialState = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
     // isFetching: false,
+    captchaUrl: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -24,7 +22,11 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload,
             }
-
+        case GET_CAPTCHA_URL_SUCCESS:
+            return {
+                ...state,
+                ...action.payload,
+            }
 
 
         default:
@@ -34,50 +36,53 @@ const authReducer = (state = initialState, action) => {
 
 export const setAuthUserData = (userId, email, login, isAuth) => {
     return {
-       type: SET_USER_DATA,
-        payload: { userId, email, login, isAuth }
-        }
+        type: SET_USER_DATA,
+        payload: {userId, email, login, isAuth}
+    }
+}
+export const getCaptchaUrlSuccess = (captchaUrl) => {
+    return {
+        type: GET_CAPTCHA_URL_SUCCESS,
+        payload: {captchaUrl}
+    }
 }
 
 //THUNK
-export const getAuthUserData = () => (dispatch) => {
-       return  authAPI.me().then(response => {
-            if (response.data.resultCode === 0) {
-                let {id, email, login} = response.data.data
-                dispatch(setAuthUserData(id, email, login, true))
-            }
-
-        })
+export const getAuthUserData = () => async (dispatch) => {
+    let response = await authAPI.me();
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data
+        dispatch(setAuthUserData(id, email, login, true))
+    }
 
 }
 
-export const login = (email, password, rememberMe) => (dispatch) => {
-
-
-
-        authAPI.login(email, password, rememberMe).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(getAuthUserData())
-            } else {
-               let message =  response.data.messages.length > 0 ? response.data.messages[0] : 'Email or password is incorrect'
-                dispatch(stopSubmit( "login", {_error: message} ));
-            }
-
-        })
-
+export const getCaptchaUrl = () => async (dispatch) => {
+    let response = await securityAPI.getCaptcha();
+    const captchaUrl = response.data.url;
+    dispatch(getCaptchaUrlSuccess(captchaUrl))
 }
 
-export const logout = () => (dispatch) => {
+export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
+    let response = await authAPI.login(email, password, rememberMe, captcha);
+    if (response.data.resultCode === 0) {
+        //success, get auth data
+        dispatch(getAuthUserData())
+    } else {
+        if(response.data.resultCode === 10) {
+            dispatch(getCaptchaUrl())
+        }
 
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Email or password is incorrect'
+        dispatch(stopSubmit("login", {_error: message}));
+    }
+}
 
-
-        authAPI.logout().then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setAuthUserData(null, null, null, false))
-            }
-
-        })
-
+export const logout = () => async (dispatch) => {
+    let response = await authAPI.logout()
+    if (response.data.resultCode === 0) {
+        dispatch(setAuthUserData(null, null, null, false))
+    }
 }
 
 export default authReducer;

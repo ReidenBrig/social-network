@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfile, getUserStatus, updateUserStatus} from "../../redux/profile-reducer";
+import {getUserProfile, getUserStatus, savePhoto, saveProfile, updateUserStatus} from "../../redux/profile-reducer";
 import {useLocation, useNavigate, useParams,} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -25,28 +25,35 @@ function withRouter(Component) {
 
 class ProfileContainer extends React.Component {
 
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.router.params.userId;
         if (!userId) {
             userId = this.props.authorizedUserId;
-            // if (!userId) {
-            //     debugger
-            //     this.props.history.push("/login")
-            // }
         }
         this.props.getUserProfile(userId);
         this.props.getUserStatus(userId);
     }
 
-    render() {
+    componentDidMount() {
+        this.refreshProfile();
+    }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      if (this.props.router.params.userId  != prevProps.router.params.userId)
+        this.refreshProfile()
+    }
+
+    render() {
         return (
             <div>
                 <Profile
+                    isOwner={!this.props.router.params.userId}
                     {...this.props}
                     profile={this.props.profile}
                     status={this.props.status}
                     updateUserStatus={this.props.updateUserStatus}
+                    savePhoto={this.props.savePhoto}
+                    saveProfile={this.props.saveProfile}
                 />
             </div>
         )
@@ -66,7 +73,9 @@ export default compose(
     connect(mapStateToProps, {
         getUserProfile,
         getUserStatus,
-        updateUserStatus
+        updateUserStatus,
+        savePhoto,
+        saveProfile
     }),
     withRouter,
 )(ProfileContainer);

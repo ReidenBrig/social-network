@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from "react";
 
+import css from './ProfileInfo.module.css'
+import edit from './../../../assets/images/edit.png'
+
 
 const ProfileStatusWithHooks = (props) => {
 
@@ -11,7 +14,7 @@ const ProfileStatusWithHooks = (props) => {
     }, [props.status])
 
     const activateEditMode = () => {
-        setEditMode(true)
+        if (props.isOwner) setEditMode(true);
     }
     const deactivateEditMode = () => {
         setEditMode(false);
@@ -23,14 +26,23 @@ const ProfileStatusWithHooks = (props) => {
     }
 
     return (
-        <div>
+        <div className={css.statusEdit}>
             {!editMode &&
                 <div>
-                    <span onDoubleClick={activateEditMode}>{status || 'No status'}</span>
+                    <b>Status:</b>
+                    <span> </span>
+                    <span title="doubleClick" onDoubleClick={activateEditMode}>{status || '-No status-'}
+                        {
+                            props.isOwner && <img className={css.editImg} src={edit} width={'15px'} alt="edit" />
+                        }
+                    </span>
+
                 </div>
             }
             {editMode &&
                 <div>
+                    <b>Status:</b>
+                    <span> </span>
                     <input
                         onBlur={deactivateEditMode}
                         autoFocus={true}

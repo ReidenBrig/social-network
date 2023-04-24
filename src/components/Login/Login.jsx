@@ -1,6 +1,6 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
-import {Input} from "../common/FormsControls/FormsControls";
+import {createField, Input} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
@@ -8,25 +8,28 @@ import {Navigate} from "react-router-dom";
 
 import css from './../common/FormsControls/FormControls.module.css'
 
-
 const maxLength10 = maxLengthCreator(20);
 
 // const Input = Element("input");
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error, captchaUrl}) => {
 
     return (
         <div>
             <h1>LOGIN</h1>
-            <form onSubmit={props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div>
-                    <Field
-                        name={'email'}
-                        placeholder={"e-mail"}
-                        component={Input}
-                        validate={[required, maxLength10]}
-                    />
+                    {createField('Email', 'email', [required], Input)}
+
                 </div>
+                {/*<div>*/}
+                {/*    <Field*/}
+                {/*        name={'email'}*/}
+                {/*        placeholder={"e-mail"}*/}
+                {/*        component={Input}*/}
+                {/*        validate={[required, maxLength10]}*/}
+                {/*    />*/}
+                {/*</div>*/}
                 <div>
                     <Field
                         type={"password"}
@@ -46,8 +49,17 @@ const LoginForm = (props) => {
                     /> Remember me
                 </div>
 
-                { props.error && <div className={css.formSummaryError}>
-                    {props.error}
+                {
+                    captchaUrl && <img src={captchaUrl}/>
+                }
+                <div>{
+                    captchaUrl && createField('Enter symbols from image', 'captcha', [required], Input, {})
+                }</div>
+
+
+
+                {error && <div className={css.formSummaryError}>
+                    {error}
                 </div>}
 
                 <div>
@@ -65,7 +77,7 @@ const LoginReduxForm = reduxForm({
 const Login = (props) => {
     const onSubmit = (formData) => {
         console.log(formData)
-        props.login(formData.email, formData.password, formData.rememberMe)
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
     if (props.isAuth) {
         return <Navigate to="/profile" replace={true}/>
@@ -73,11 +85,12 @@ const Login = (props) => {
 
     return (
         <div>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
         </div>
     )
 }
 const mapStateToProps = (state) => ({
+    captchaUrl: state.auth.captchaUrl,
     isAuth: state.auth.isAuth
 })
 export default connect(mapStateToProps, {login})(Login)

@@ -1,6 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
-import {follow, setCurrentPage, toggleFollowingProgress, unfollow, getUsers} from "../../redux/users-reducer";
+import {
+    follow,
+    getUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleFollowingProgress,
+    unfollow
+} from "../../redux/users-reducer";
 import Users from "./Users";
 
 import css from './Users.module.css'
@@ -13,7 +21,7 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsersFrom, getUsersSuper, getUsersSuperSelector
+    getUsersFrom
 } from "../../redux/users-selectors";
 
 class UsersContainer extends React.Component {
@@ -102,7 +110,7 @@ const mapStateToProps = (state) => {
 
 const mapStateToProps = (state) => {
     return {
-         users: getUsersFrom(state),
+        users: getUsersFrom(state),
         // users: getUsersSuperSelector(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
@@ -117,9 +125,9 @@ export default compose(
     connect(mapStateToProps, {
         follow,
         unfollow,
-        // setUsers,
+        setUsers,
         setCurrentPage,
-        // setTotalUsersCount,
+        setTotalUsersCount,
         // toggleIsFetching,
         toggleFollowingProgress,
         getUsers

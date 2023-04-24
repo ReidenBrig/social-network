@@ -1,32 +1,26 @@
 import React from 'react';
 // import store from "./redux/store";
-import store from "./redux/redux-store";
 
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import {BrowserRouter} from "react-router-dom";
-import {Provider} from "react-redux";
+import MainApp from './App';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // export let rerenderEntireTree = (state) => {
 
-    root.render(
-        // <React.StrictMode>
-            <BrowserRouter>
-                <Provider store={store}>
+root.render(
+    <MainApp/>
+    // <React.StrictMode>
+    /*<BrowserRouter>
+        <Provider store={store}>
 
-                    <App
-                        // state={state}
-                        //  dispatch={store.dispatch.bind(store)}
-                        //  store={store}
-                    />
-                </Provider>
+            <App/>
+        </Provider>
 
-            </BrowserRouter>
-        // </React.StrictMode>
-    );
+    </BrowserRouter>*/
+    // </React.StrictMode>
+);
 
 /*}
 
