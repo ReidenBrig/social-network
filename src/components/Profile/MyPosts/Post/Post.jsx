@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import css from "./Post.module.css";
 
 const Post = (props) => {
-    // const [dateNow, setTime] = useState(new Date());
+
     //
     // // let dateNow = new Date();
     // let year = dateNow.getFullYear()
@@ -14,6 +14,7 @@ const Post = (props) => {
     //
     // let fullDate = `${year}/${month}/${day} ${hours}:${minutes}`
 
+
     return (
         <div className={css.item}>
             {/*<img src="https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/udHvbKwV-IMG-Dubai-UAE-1.jpg" />*/}
@@ -21,6 +22,7 @@ const Post = (props) => {
                 {props.message}
             </div>
             <div>
+                {props.time}
                 {/*{fullDate}*/}
                 {/*{`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}*/}
             </div>

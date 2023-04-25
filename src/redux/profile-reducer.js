@@ -10,7 +10,7 @@ const SET_PROFILE_SUCCESS = 'SET-PROFILE-SUCCESS';
 
 let initialState = {
     postsData: [
-        {id: 1, message: "It's my first post", likesCount: 0},
+        {id: 1, message: "It's my first post", likesCount: 0, time: '26.04.2023, 01:31:56' },
         // {id: 2, message: "Hello, how are you?", likesCount: 2},
         // {id: 3, message: "Post 3", likesCount: 3},
         // {id: 4, message: "Post 4", likesCount: 4}
@@ -24,9 +24,10 @@ const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
-                id: 5,
+                id: Date.now(),
                 message: action.newPostText,
-                likesCount: 0,
+                time: new Date().toLocaleString(),
+                // likesCount: 0,
             };
 
             return {

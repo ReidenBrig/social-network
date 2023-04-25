@@ -7,6 +7,9 @@ import {login} from "../../redux/auth-reducer";
 import {Navigate} from "react-router-dom";
 
 import css from './../common/FormsControls/FormControls.module.css'
+import cssLogin from './Login.module.css'
+
+
 
 const maxLength10 = maxLengthCreator(20);
 
@@ -17,21 +20,23 @@ const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     return (
         <div>
             <h1>LOGIN</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form onSubmit={handleSubmit}  >
+                {/*<div>
                     {createField('Email', 'email', [required], Input)}
 
-                </div>
-                {/*<div>*/}
-                {/*    <Field*/}
-                {/*        name={'email'}*/}
-                {/*        placeholder={"e-mail"}*/}
-                {/*        component={Input}*/}
-                {/*        validate={[required, maxLength10]}*/}
-                {/*    />*/}
-                {/*</div>*/}
+                </div>*/}
                 <div>
                     <Field
+                        className={cssLogin.loginForm}
+                        name={'email'}
+                        placeholder={"e-mail"}
+                        component={Input}
+                        validate={[required, maxLength10]}
+                    />
+                </div>
+                <div>
+                    <Field
+                        className={cssLogin.loginForm}
                         type={"password"}
                         name={'password'}
                         placeholder={"password"}
@@ -41,7 +46,7 @@ const LoginForm = ({handleSubmit, error, captchaUrl}) => {
                 </div>
                 <div>
                     <Field
-
+                        className={cssLogin.loginCheck}
                         name={'rememberMe'}
                         type={"checkbox"}
                         component={Input}
@@ -63,7 +68,7 @@ const LoginForm = ({handleSubmit, error, captchaUrl}) => {
                 </div>}
 
                 <div>
-                    <button>Login</button>
+                    <button  className={cssLogin.btn}>Login</button>
                 </div>
             </form>
         </div>

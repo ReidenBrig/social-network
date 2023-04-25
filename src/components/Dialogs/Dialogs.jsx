@@ -4,8 +4,6 @@ import Message from "./Message/Message";
 import {Navigate} from "react-router-dom";
 
 import css from './Dialogs.module.css'
-import {Field, reduxForm} from "redux-form";
-import AddMessageForm from "./AddMessageForm/AddMessageForm";
 import AddMessageFormRedux from "./AddMessageForm/AddMessageForm";
 
 const Dialogs = (props) => {
@@ -44,10 +42,6 @@ const Dialogs = (props) => {
         </div>
     )
 }
-
-
-
-
 
 
 export default Dialogs;

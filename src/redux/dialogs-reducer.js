@@ -5,9 +5,7 @@ let initialState = {
     dialogsData: [
         {id: 1, name: "Alex"},
         {id: 2, name: "Ebert"},
-        {id: 3, name: "August"},
-        {id: 4, name: "Loki"},
-        {id: 5, name: "Pol"}
+        {id: 3, name: "August"}
     ],
     messagesData: [
         {id: 1, message: "Hello"},
@@ -32,8 +30,8 @@ const dialogsReducer = (state = initialState, action) => {
             let body = action.newMessageBody;
             return  {
                 ...state,
-                // newMessageBody: '',
-                messagesData: [...state.messagesData, {id: 6, message: body}],
+                newMessageBody: '',
+                messagesData: [...state.messagesData, {id: 6, message: body} ],
             };
 
         default:

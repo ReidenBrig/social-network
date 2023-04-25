@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 
 import css from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {Field, reduxForm} from 'redux-form'
 import {maxLengthCreator, required} from "../../../utils/validators/validators";
+import {Textarea} from "../../common/FormsControls/FormsControls";
 
 // const Textarea = Element("textarea");
 
@@ -16,7 +17,7 @@ let AddNewPostForm = (props) => {
             <div className={css.textArea}>
                 <Field
                     name={'newPostText'}
-                    component={"textarea"}
+                    component={Textarea}
                     placeholder={'Enter your post'}
                     validate={[required, maxLength10]}
                 />
@@ -42,6 +43,7 @@ const MyPosts = React.memo((props) => {
                 message={post.message}
                 id={post.id}
                 //likesCount={post.likesCount}
+                time={post.time}
             />
         ))
 
