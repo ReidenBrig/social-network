@@ -31,6 +31,7 @@ const Post = (props) => {
                 {/*{props.likesCount}*/}
                 {/*<span> ❤ </span>*/}
             </div>
+            {/*<button onClick={() => props.deletePost(props.id)}>Del</button>*/}
         </div>
     );
 };

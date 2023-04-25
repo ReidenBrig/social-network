@@ -35,7 +35,16 @@ AddNewPostForm = reduxForm({
 })(AddNewPostForm)
 
 
+//
 const MyPosts = React.memo((props) => {
+    const [post, setPost] = useState(props.postsData)
+    const deletePost = (id) => {
+        // debugger
+        console.log(props.postsData.filter((item) => item.id !== id))
+            // setPost((prevPost) => prevPost.filter((item) => item.id !== id))
+
+
+    }
     let postsElements =
         props.postsData.map((post) => (
             <Post
@@ -44,14 +53,17 @@ const MyPosts = React.memo((props) => {
                 id={post.id}
                 //likesCount={post.likesCount}
                 time={post.time}
+                deletePost={deletePost}
             />
         ))
+
 
     // let newPostElement = React.createRef();
 
     const onAddPost = (values) => {
         props.addPost(values.newPostText);
     }
+
     return (
 
         <div className={css.postsBlock}>
